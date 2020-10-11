@@ -10,7 +10,15 @@ import (
 	"net/http"
 )
 
-var addr = flag.String("addr", ":8080", "http service address")
+var addr = flag.String("addr", getPort(), "http service address")
+
+func getPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+	  return ":8080"
+	}
+	return ":" + port
+  }
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.URL)
